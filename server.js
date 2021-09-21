@@ -1,10 +1,20 @@
 const express = require('express');
+const connectDB = require('./config/db')
 
 const app = express();
 
-app.get('/', (req, res) => {
-    return res.json({ message: 'Welcome to Backend once again'})
-})
+//Connect Database
+connectDB();
+
+
+//Init Middlewares
+app.use(express.json({ extended: false }));
+
+
+// app.get('/', (req, res) => {
+//     return res.json({ message: 'Welcome to Backend once again'})
+// })
+
 
 //Define our routes
 
