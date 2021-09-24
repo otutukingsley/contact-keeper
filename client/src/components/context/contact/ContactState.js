@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from 'react'
+import React, { useReducer } from 'react'
 import { v1 as uuid } from 'uuid'
 import contactContext from './contactContext'
 import contactReducer from './contactReducer'

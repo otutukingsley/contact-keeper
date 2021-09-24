@@ -57,4 +57,4 @@ const contactReducer = (state, action) => {
   }
 }
 
-export default contactReducer
+export default contactReducer;
