@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from 'react'
+import React, { useReducer } from 'react'
 import alertContext from './alertContext'
 import alertReducer from './alertReducer'
 import { v1 as uuid } from 'uuid'

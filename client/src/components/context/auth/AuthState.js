@@ -1,4 +1,4 @@
-import React, { useState, useReducer, useEffect } from 'react'
+import React, { useReducer  } from 'react'
 import axios from 'axios'
 import setAuthToken from '../../../utils/setAuthToken'
 import authContext from './authContext'
