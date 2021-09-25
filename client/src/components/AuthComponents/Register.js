@@ -1,11 +1,28 @@
-import { set } from 'mongoose'
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import { useHistory } from 'react-router'
 import alertContext from '../context/alert/alertContext'
+import authContext from '../context/auth/authContext'
 
 const Register = () => {
+  const history = useHistory()
   const context = useContext(alertContext)
+  const authenticationContext = useContext(authContext)
 
   const { setAlert } = context
+  const { register, error, clearErrors, isAuth } = authenticationContext
+
+  useEffect(() => {
+    if (isAuth) {
+      history.push('/')
+    }
+
+    if (error === 'User Already Exits') {
+      setAlert(error, 'danger')
+      clearErrors()
+    }
+
+    //eslint-disable-next-line
+  }, [error, isAuth, history])
 
   const [user, setUser] = useState({
     name: '',
@@ -27,7 +44,11 @@ const Register = () => {
     } else if (password !== confirmPassword) {
       setAlert('Passwords do not match', 'danger')
     } else {
-      setAlert('Registered', 'primary')
+      register({
+        name,
+        email,
+        password,
+      })
     }
   }
 

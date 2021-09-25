@@ -1,20 +1,44 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
+import { useHistory } from 'react-router'
+import authContext from '../context/auth/authContext'
+import alertContext from '../context/alert/alertContext'
 
 const Login = () => {
   const [user, setUser] = useState({
     email: '',
     password: '',
   })
+  const authenticationContext = useContext(authContext)
+  const alertNotifContext = useContext(alertContext)
+  const history = useHistory()
 
-  const { email, password, } = user
+  const { email, password } = user
+  const { login, isAuth, error, clearErrors } = authenticationContext
+  const { setAlert } = alertNotifContext
+
+  useEffect(() => {
+    if (isAuth) {
+      history.push('/')
+    }
+
+    if (error === 'Invalid Credentials') {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+
+    //eslint-disable-next-line
+  }, [error, isAuth, history])
 
   const onChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value })
   }
 
   const onSubmit = (e) => {
-      e.preventDefault();
-      console.log('Logged In')
+    e.preventDefault()
+    login({
+      email,
+      password,
+    })
   }
 
   return (
@@ -31,6 +55,7 @@ const Login = () => {
             placeholder="Enter email..."
             value={email}
             onChange={onChange}
+            required
           />
         </div>
         <div className="form-group">
@@ -41,6 +66,7 @@ const Login = () => {
             placeholder="Password"
             value={password}
             onChange={onChange}
+            required
           />
         </div>
         <input
@@ -53,4 +79,4 @@ const Login = () => {
   )
 }
 
-export default Login;
+export default Login
